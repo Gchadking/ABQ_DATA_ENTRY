@@ -86,7 +86,9 @@ class CSVModel:
 class SettingModel:
     variables={
         'autofill date':{'type':'bool','value':True},
-        'autofill sheet data':{'type':'bool','value':True}
+        'autofill sheet data':{'type':'bool','value':True},
+        'font size':{'type':'int','value':10},
+        'theme':{'type':'str','value':'default'}
     }
 
     def __init__(self,filename='abq_settings.json',path='.\\'):# 保存在当前项目路径下，如需保存在子文件内需指明路径

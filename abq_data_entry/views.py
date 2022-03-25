@@ -7,6 +7,11 @@ from . import widgets as w
 class DataRecordForm(tk.Frame):
     def __init__(self,parent,fields,settings,callbacks,*args,**kwargs):
         super().__init__(parent,*args,**kwargs)
+        style=ttk.Style()
+        style.configure('recordinfo.TLabel',background='khaki')
+        style.configure('environmentinfo.TLabel',background='lightblue')
+        style.configure('environmentinfo.TCheckbutton',background='lightblue')
+        style.configure('plantinfo.TLabel',background='lightgreen')
         self.settings=settings
         self.callbacks=callbacks
         self.inputs={}
@@ -17,49 +22,81 @@ class DataRecordForm(tk.Frame):
         self.record_label.grid(row=0,column=0)
         recordinfo=tk.LabelFrame(self,text="Record information")
         self.inputs['Date']=w.LabelInput(recordinfo,"Date",
-                                       field_spec=fields['Date'])
+                                       field_spec=fields['Date'],
+                                         label_args={'style':'recordinfo.TLabel'})
         self.inputs['Date'].grid(row=0,column=0)
 
-        self.inputs['Time']=w.LabelInput(recordinfo,"Time",field_spec=fields['Time'])
+        self.inputs['Time']=w.LabelInput(recordinfo,"Time",
+                                         field_spec=fields['Time'],
+                                         label_args={'style':'recordinfo.TLabel'})
         self.inputs['Time'].grid(row=0,column=1)
-        self.inputs['Technician']=w.LabelInput(recordinfo,"Technician",field_spec=fields['Technician'])
+        self.inputs['Technician']=w.LabelInput(recordinfo,"Technician",
+                                               field_spec=fields['Technician'],
+                                               label_args={'style':'recordinfo.TLabel'})
         self.inputs['Technician'].grid(row=0,column=2)
-        self.inputs['Lab']=w.LabelInput(recordinfo,"Lab",field_spec=fields['Lab'])
+        self.inputs['Lab']=w.LabelInput(recordinfo,"Lab",
+                                        field_spec=fields['Lab'],
+                                        label_args={'style':'recordinfo.TLabel'})
         self.inputs['Lab'].grid(row=1,column=0)
-        self.inputs['Plot']=w.LabelInput(recordinfo,"Plot",field_spec=fields['Plot'])
+        self.inputs['Plot']=w.LabelInput(recordinfo,"Plot",
+                                         field_spec=fields['Plot'],
+                                         label_args={'style':'recordinfo.TLabel'})
         self.inputs['Plot'].grid(row=1,column=1)
-        self.inputs['Seed sample']=w.LabelInput(recordinfo,"Seed sample",field_spec=fields['Seed sample'])
+        self.inputs['Seed sample']=w.LabelInput(recordinfo,"Seed sample",
+                                                field_spec=fields['Seed sample'],
+                                                label_args={'style':'recordinfo.TLabel'})
         self.inputs['Seed sample'].grid(row=1,column=2)
         recordinfo.grid(row=1,column=0,sticky=tk.W+tk.E)
 
         environmentinfo=tk.LabelFrame(self,text="Environment Data")
-        self.inputs['Humidity']=w.LabelInput(environmentinfo,"Humidity(g/m3)",field_spec=fields['Humidity'])
+        self.inputs['Humidity']=w.LabelInput(environmentinfo,"Humidity(g/m3)",
+                                             field_spec=fields['Humidity'],
+                                             label_args={'style':'environmentinfo.TLabel'})
         self.inputs['Humidity'].grid(row=0,column=0)
-        self.inputs['Light']=w.LabelInput(environmentinfo,"Light(klx)",field_spec=fields['Light'])
+        self.inputs['Light']=w.LabelInput(environmentinfo,"Light(klx)",
+                                          field_spec=fields['Light'],
+                                          label_args={'style':'environmentinfo.TLabel'})
         self.inputs['Light'].grid(row=0,column=1)
-        self.inputs['Temperature']=w.LabelInput(environmentinfo,"Temperature",field_spec=fields['Temperature'])
+        self.inputs['Temperature']=w.LabelInput(environmentinfo,"Temperature",
+                                                field_spec=fields['Temperature'],
+                                                label_args={'style':'environmentinfo.TLabel'})
         self.inputs['Temperature'].grid(row=0,column=2)
 
-        self.inputs['Equipment Fault']=w.LabelInput(environmentinfo,"Equipment Fault",field_spec=fields['Equipment Fault'])
+        self.inputs['Equipment Fault']=w.LabelInput(environmentinfo,"Equipment Fault",
+                                                    field_spec=fields['Equipment Fault'],
+                                                    label_args={'style':'environmentinfo.TLabel'},
+                                                    input_args={'style':'environmentinfo.TCheckbutton'})
         self.inputs['Equipment Fault'].grid(row=1,column=0,columnspan=3)
 
         environmentinfo.grid(row=2,column=0,sticky=tk.W+tk.E)
 
         plantinfo=tk.LabelFrame(self,text="Plant data")
-        self.inputs['Plants']=w.LabelInput(plantinfo,"Plants",field_spec=fields['Plants'])
+        self.inputs['Plants']=w.LabelInput(plantinfo,"Plants",
+                                           field_spec=fields['Plants'],
+                                           label_args={'style':'plantinfo.TLabel'})
         self.inputs['Plants'].grid(row=0,column=0)
-        self.inputs['Blossoms']=w.LabelInput(plantinfo,"Blossoms",field_spec=fields['Blossoms'])
+        self.inputs['Blossoms']=w.LabelInput(plantinfo,"Blossoms",
+                                             field_spec=fields['Blossoms'],
+                                             label_args={'style':'plantinfo.TLabel'})
         self.inputs['Blossoms'].grid(row=0,column=1)
-        self.inputs['Fruit']=w.LabelInput(plantinfo,"Fruit",field_spec=fields['Fruit'])
+        self.inputs['Fruit']=w.LabelInput(plantinfo,"Fruit",
+                                          field_spec=fields['Fruit'],
+                                          label_args={'style':'plantinfo.TLabel'})
         self.inputs['Fruit'].grid(row=0,column=2)
-        self.inputs['Min height']=w.LabelInput(plantinfo,"Min height (cm)",field_spec=fields['Min height'],
+        self.inputs['Min height']=w.LabelInput(plantinfo,"Min height (cm)",
+                                               field_spec=fields['Min height'],
+                                               label_args={'style':'plantinfo.TLabel'},
                                              input_args={"max_var":max_height_var,"focus_update_var":min_height_var})
         self.inputs['Min height'].grid(row=1,column=0)
-        self.inputs['Max height'] = w.LabelInput(plantinfo, "Max height (cm)", field_spec=fields['Max height'],
+        self.inputs['Max height'] = w.LabelInput(plantinfo, "Max height (cm)",
+                                                 field_spec=fields['Max height'],
+                                                 label_args={'style':'plantinfo.TLabel'},
                                                  input_args={"min_var":min_height_var,
                                                            "focus_update_var":max_height_var})
         self.inputs['Max height'].grid(row=1, column=1)
-        self.inputs['Median height'] = w.LabelInput(plantinfo, "Median height (cm)", field_spec=fields['Median height'],
+        self.inputs['Median height'] = w.LabelInput(plantinfo, "Median height (cm)",
+                                                    field_spec=fields['Median height'],
+                                                    label_args={'style':'plantinfo.TLabel'},
                                                input_args={"min_var":min_height_var,"max_var":max_height_var})
         self.inputs['Median height'].grid(row=1, column=2)
 
@@ -141,6 +178,19 @@ class MainMenu(tk.Menu):
                                      variable=settings['autofill date'])
         options_menu.add_checkbutton(label='Auto fill sheet data',
                                      variable=settings['autofill sheet data'])
+        font_size_menu=tk.Menu(self,tearoff=False)
+        for size in range(6,17,1):
+            font_size_menu.add_radiobutton(label=size,value=size,
+                                           variable=settings['font size'])
+        options_menu.add_cascade(label='Font siez',menu=font_size_menu)
+        style=ttk.Style()
+        themes_menu=tk.Menu(self,tearoff=False)
+        for theme in style.theme_names():
+            themes_menu.add_radiobutton(
+                label=theme,value=theme,
+                variable=settings['theme']
+            )
+        options_menu.add_cascade(label='Theme',menu=themes_menu)
         self.add_cascade(label='Options',menu=options_menu)
         go_menu=tk.Menu(self,tearoff=False)
         go_menu.add_command(label='Record list',command=callbacks['show_recordlist'])
@@ -167,9 +217,11 @@ class RecordList(tk.Frame):
     default_width=100
     default_minwidth=10
     default_anchor=tk.CENTER
-    def __init__(self,parent,callbacks,*args,**kwargs):
+    def __init__(self,parent,callbacks,inserted,updated,*args,**kwargs):
         super().__init__(parent,*args,**kwargs)
         self.callbacks=callbacks
+        self.inserted=inserted
+        self.updated=updated
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.treeview=ttk.Treeview(self,
@@ -179,6 +231,7 @@ class RecordList(tk.Frame):
 
         self.scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.treeview.yview)
         self.treeview.config(yscrollcommand=self.scrollbar.set)
+
         self.treeview.grid(row=0, column=0, sticky='NSEW')
         self.scrollbar.grid(row=0, column=1, sticky='NSW')
         for name,definition in self.column_defs.items():
@@ -189,6 +242,8 @@ class RecordList(tk.Frame):
             stretch=definition.get('stretch',False)
             self.treeview.heading(name,text=label,anchor=anchor)
             self.treeview.column(name,anchor=anchor,minwidth=minwidth,width=width,stretch=stretch)
+        self.treeview.tag_configure('inserted', background='green')
+        self.treeview.tag_configure('updated', background='blue')
 
         self.treeview.bind('<<TreeviewOpen>>',self.on_open_record)
 
@@ -198,7 +253,13 @@ class RecordList(tk.Frame):
         valuekeys=list(self.column_defs.keys())[1:]
         for rownum,rowdata in enumerate(rows):
             values=[rowdata[key] for key in valuekeys]
-            self.treeview.insert('','end',iid=str(rownum),text=str(rownum),values=values)
+            if self.inserted and rownum in self.inserted:
+                tag='inserted'
+            elif self.updated and rownum in self.updated:
+                tag='updated'
+            else:
+                tag=''
+            self.treeview.insert('','end',iid=str(rownum),text=str(rownum),values=values,tag=tag)
         if len(rows)>0:
             self.treeview.focus_set()
             self.treeview.selection_set(0)

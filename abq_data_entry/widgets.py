@@ -4,13 +4,25 @@ from datetime import datetime
 from decimal import Decimal,InvalidOperation
 from .constants import FieldTypes as FT
 
+class TtkSpinbox(ttk.Entry):
+    def __init__(self,parent=None,**kwargs):
+        super().__init__(parent,'ttk::spinbox',**kwargs)
+
 class ValidatedMixin:
     def __init__(self,*args,error_var=None,**kwargs):
         self.error=error_var or tk.StringVar()
         super().__init__(*args,**kwargs)
-        vcmd=self.register(self._validate)
-        invcmd=self.register(self._invalid)
+        vcmd = self.register(self._validate)
+        invcmd = self.register(self._invalid)
+        style=ttk.Style()
+        widget_class=self.winfo_class()
+        validated_style='ValidatedInput.'+widget_class
+        style.map(validated_style,
+                  foreground=[('invalid','white'),('!invalid','black')],
+                 fieldbackground=[('invalid','darkred'),('!invalid','white')])
+
         self.config(
+            style=validated_style,
             validate='all',
             validatecommand=(vcmd,'%P','%s','%S','%V','%i','%d'),
             invalidcommand=(invcmd,'%P','%s','%S','%V','%i','%d')
@@ -47,6 +59,9 @@ class ValidatedMixin:
 
     def _focusout_invalid(self,**kwargs):
         self._toggle_error(True)
+        pass
+
+
 
     def _key_invalid(self,**kwargs):
         pass
@@ -91,7 +106,7 @@ class ValidatedCombobox(ValidatedMixin,ttk.Combobox):
         return valid
 
 
-class ValidatedSpinbox(ValidatedMixin,ttk.Spinbox):
+class ValidatedSpinbox(ValidatedMixin,TtkSpinbox):
     def __init__(self,*args,min_var=None,max_var=None,
                  focus_update_var=None,from_='-Infinity',
                  to='Infinity',**kwargs):
@@ -254,7 +269,7 @@ class LabelInput(tk.Frame):
         self.input.grid(row=1,column=0,sticky=(tk.W+tk.E))
         self.columnconfigure(0,weight=1)
         self.error=getattr(self.input,'error',tk.StringVar())
-        self.error_label=ttk.Label(self,textvariable=self.error)
+        self.error_label=ttk.Label(self,textvariable=self.error,**label_args)
         self.error_label.grid(row=2,column=0,sticky=(tk.W+tk.E))
 
 
